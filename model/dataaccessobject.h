@@ -20,6 +20,7 @@ public:
         bool deleteUser(int user_id);
         bool updateUser(int user_id, const QString &newUsername, const QString &newPasswordHash);
         QList<QVariantList> readAllUsers();
+        bool checkUserExists(const QString &username, const QString &password);
 private:
     DataAccessObject();
 

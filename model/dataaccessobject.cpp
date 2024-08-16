@@ -38,6 +38,24 @@ bool DataAccessObject::createUsersTable() {
 
     return true;
 }
+bool DataAccessObject::checkUserExists(const QString &username, const QString &password){
+    QSqlQuery query;
+    query.prepare("SELECT EXISTS (SELECT 1 FROM Users WHERE username = :username AND password_hash = :password_hash)");
+        query.bindValue(":username", username);
+        query.bindValue(":password_hash", password);
+
+        if (!query.exec()) {
+            qDebug( "Query execution error:" + query.lastError().text().toLatin1());
+            return false;
+        }
+
+        // Check the result
+        if (query.next()) {
+            return query.value(0).toInt() == 1;
+        }
+
+        return false;
+}
 
 DataAccessObject::DataAccessObject()
 {
