@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>loginScreen.qml</file>
         <file>signUpScreen.qml</file>
+        <file>contactListScreen.qml</file>
     </qresource>
 </RCC>

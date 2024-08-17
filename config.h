@@ -4,6 +4,7 @@
 namespace Configuration{
     const QString LoginScreen = "loginScreen.qml";
     const QString SignUpScreen = "signUpScreen.qml";
+    const QString ContactListScreen = "contactListScreen.qml";
 };
 
 

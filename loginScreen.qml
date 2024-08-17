@@ -33,16 +33,24 @@ Item {
                     text: "Login"
                     onClicked: {
                         // Handle login logic here
+                        loginController.login(usernameField.text, passwordField.text)
                     }
                 }
 
                 Button {
+                    id: signUpButton
                     text: "Sign Up"
                     onClicked: {
                         // Handle sign-up navigation here
                         navigator.navigateToSignUp()
                     }
                 }
+
+            }
+            Text {
+                text: loginController.notificationText
+                anchors.top: signUpButton.bottom
+                anchors.horizontalCenter:  parent
             }
         }
     }

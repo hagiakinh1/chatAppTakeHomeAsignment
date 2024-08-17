@@ -10,6 +10,7 @@ Window {
     Loader{
         id:loader
         anchors.centerIn: parent
+        anchors.fill: parent
     }
     Connections {
             target: navigator

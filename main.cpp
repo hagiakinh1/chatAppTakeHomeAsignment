@@ -1,10 +1,14 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include<model/dataaccessobject.h>
+#include <model/dataaccessobject.h>
 #include <QTextStream>
 #include <controller/navigator.h>
 #include <QQmlContext>
+#include <controller/logincontroller.h>
+#include <model/contactmodel.h>
 #include <QThread>
+
+
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +18,13 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     DataAccessObject &a  = DataAccessObject::getInstance();
+
+//    a.createMessage(1,2, "aaaaaa");
+//    a.createMessage(1,3, "aa");
+//    a.createMessage(3,1, "aab");
+//    a.createMessage(4,1, "hey");
+
+    a.readAllUsersWithLatestMessage(1);
     QList<QVariantList> users = a.readAllUsers();
         for (const QVariantList& user : users) {
             auto userInfo = "User ID: " + QString::number(user[0].toInt())+
@@ -28,7 +39,15 @@ int main(int argc, char *argv[])
         else{
             qDebug("no");
         }
+
+    LoginController mLoginController;
+    ContactModel mContactModel;
+     QObject::connect(&mLoginController, LoginController::userChanged, &mContactModel, ContactModel::setDataFromUserId);
+
+
     engine.rootContext()->setContextProperty("navigator", &Navigator::getInstance());
+    engine.rootContext()->setContextProperty("loginController", &mLoginController);
+    engine.rootContext()->setContextProperty("contactModel", &mContactModel);
 
 //    NavigatorDispatcher::dispatch(UserOpenContactList());
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

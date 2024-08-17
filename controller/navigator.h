@@ -5,6 +5,8 @@
 #include <tinyfsm.hpp>
 #include<config.h>
 #include <QMap>
+#include<controller/logincontroller.h>
+#include<model/contactmodel.h>
 //Navigation is done using a state machine, each state is a screen.
 
 //forward declaration
@@ -91,6 +93,7 @@ public:
     Navigator(const Navigator&) = delete;
     Navigator& operator=(const Navigator&) = delete;
     virtual ~Navigator() {}
+
 public slots:
     void setScreen(QString screen);
 signals:
@@ -98,6 +101,7 @@ signals:
 private:
 //    explicit Navigator(QObject * parent = nullptr);
     Navigator();
+
 };
 
 #endif // NAVIGATOR_H

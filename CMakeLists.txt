@@ -12,6 +12,10 @@ add_library(libTinyFsm)
 add_executable(${PROJECT_NAME} "main.cpp" "qml.qrc"
     "model/dataaccessobject.cpp"
     "model/dataaccessobject.h"
+    "model/contactmodel.cpp"
+    "model/contactmodel.h"
+    "controller/logincontroller.cpp"
+    "controller/logincontroller.h"
     "controller/navigator.cpp"
     "controller/navigator.h"
     "config.h")

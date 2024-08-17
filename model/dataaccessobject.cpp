@@ -57,6 +57,25 @@ bool DataAccessObject::checkUserExists(const QString &username, const QString &p
         return false;
 }
 
+int DataAccessObject::findUser(const QString &username, const QString &password) {
+    QSqlQuery query;
+    query.prepare("SELECT user_id FROM Users WHERE username = :username AND password_hash = :password_hash");
+    query.bindValue(":username", username);
+    query.bindValue(":password_hash", password);
+
+    if (!query.exec()) {
+        qDebug( "Query execution error:" + query.lastError().text().toLatin1());
+        return -1;
+    }
+
+    // Check if the query returned a result
+    if (query.next()) {
+        return query.value(0).toInt();  // Return the user_id
+    }
+
+    return -1;  // Return -1 if the user does not exist
+}
+
 DataAccessObject::DataAccessObject()
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
@@ -194,6 +213,59 @@ QList<QVariantList> DataAccessObject::readMessagesBetweenUsers(int user1_id, int
     }
 
     return messages;
+}
+
+QList<QVariantList> DataAccessObject::readAllUsersWithLatestMessage(int user_id) {
+    QString queryString = R"(SELECT
+                          Users.user_id,
+                          Users.username,
+                          Messages.message_text AS latest_message,
+                          Messages.sent_at AS latest_message_time
+                      FROM
+                          Users
+                      JOIN
+                          Messages ON Users.user_id = (
+                              CASE
+                                  WHEN Messages.sender_id = :user_id THEN Messages.receiver_id
+                                  WHEN Messages.receiver_id = :user_id THEN Messages.sender_id
+                              END
+                          )
+                      WHERE
+                          Messages.message_id IN (
+                              SELECT
+                                  MAX(message_id)
+                              FROM
+                                  Messages
+                              WHERE
+                                  :user_id IN (sender_id, receiver_id)
+                              GROUP BY
+                                  CASE
+                                      WHEN sender_id = :user_id THEN receiver_id
+                                      ELSE sender_id
+                                  END
+                          )
+                      ORDER BY
+                          Messages.sent_at DESC;
+)";
+    QSqlQuery query;
+    query.prepare(queryString);
+    query.bindValue(":user_id", user_id);
+
+    QList<QVariantList> usersWithLatestMessage;
+    if (query.exec()) {
+        while (query.next()) {
+            QVariantList user;
+            user << query.value("user_id")
+                 << query.value("username")
+                 << query.value("latest_message")
+                 << query.value("latest_message_time");
+            usersWithLatestMessage.append(user);
+            qDebug("---------");
+            qDebug(query.value("user_id").toByteArray() + query.value("username").toByteArray()+query.value("latest_message").toByteArray()+query.value("latest_message_time").toByteArray());
+        }
+    }
+
+    return usersWithLatestMessage;
 }
 
 

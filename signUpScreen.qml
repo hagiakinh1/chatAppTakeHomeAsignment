@@ -38,6 +38,12 @@ Item {
                 width: 250
                 onClicked: {
                     // Handle sign-up logic here
+                    if(passwordField.text ===repeatPasswordField.text){
+                        loginController.signUp(usernameField.text, passwordField.text)
+                    }else{
+                        console.log("repeatPasswordField doesnt match")
+                    }
+
                 }
             }
             Button {

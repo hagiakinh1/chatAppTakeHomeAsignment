@@ -21,6 +21,8 @@ public:
         bool updateUser(int user_id, const QString &newUsername, const QString &newPasswordHash);
         QList<QVariantList> readAllUsers();
         bool checkUserExists(const QString &username, const QString &password);
+        QList<QVariantList> readAllUsersWithLatestMessage(int user_id);
+        int findUser(const QString &username, const QString &password);
 private:
     DataAccessObject();
 

@@ -98,6 +98,7 @@ void ContactListScreen::entry()
 {
     //load ContactListScreen
     qDebug("load ContactListScreen");
+    Navigator::getInstance().setScreen(Configuration::ContactListScreen);
 }
 
 void ChatScreen::react(const UserBack &)
