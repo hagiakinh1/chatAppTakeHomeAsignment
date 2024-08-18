@@ -18,7 +18,9 @@ public:
     {
         return m_notificationText;
     }
-    int getUserId();
+    Q_INVOKABLE int getUserId();
+    QString getUserName() const;
+
 signals:
 
     void notificationTextChanged(QString notificationText);

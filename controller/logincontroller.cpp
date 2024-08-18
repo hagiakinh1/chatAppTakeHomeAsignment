@@ -32,6 +32,11 @@ int LoginController::getUserId()
     return user_id;
 }
 
+QString LoginController::getUserName() const
+{
+    return userName;
+}
+
 LoginController::login(QString userName, QString password)
 {
     this->userName = userName;
@@ -63,6 +68,6 @@ LoginController::signUp(QString userName, QString password)
     }
 }
 void LoginController::setUserId(int user_id){
-    user_id = user_id;
+    this->user_id = user_id;
     emit userChanged(user_id);
 }

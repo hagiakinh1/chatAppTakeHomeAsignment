@@ -4,7 +4,7 @@
 #include <QVariantList>
 #include <QObject>
 #include"dataaccessobject.h"
-enum ModelRole {
+enum ContactListModelRole {
     UserName = Qt::UserRole + 1,
     LatestMessage,
     UserId
