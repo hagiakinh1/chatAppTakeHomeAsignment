@@ -18,6 +18,8 @@ add_executable(${PROJECT_NAME} "main.cpp" "qml.qrc"
     "controller/logincontroller.h"
     "controller/navigator.cpp"
     "controller/navigator.h"
+    "controller/chatcontroller.cpp"
+    "controller/chatcontroller.h"
     "config.h")
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::Sql libTinyFsm)

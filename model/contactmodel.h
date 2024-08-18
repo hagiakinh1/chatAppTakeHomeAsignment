@@ -6,7 +6,8 @@
 #include"dataaccessobject.h"
 enum ModelRole {
     UserName = Qt::UserRole + 1,
-    LatestMessage
+    LatestMessage,
+    UserId
 };
 class ContactModel : public QAbstractListModel
 {

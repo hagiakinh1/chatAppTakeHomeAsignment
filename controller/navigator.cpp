@@ -110,4 +110,5 @@ void ChatScreen::entry()
 {
     //load chat screen
     qDebug("load chat screen");
+    Navigator::getInstance().setScreen(Configuration::ChatScreen);
 }

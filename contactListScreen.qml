@@ -16,41 +16,51 @@ Item {
     ListView {
         anchors.top: signOffbutton.bottom
         anchors.topMargin: 50
-            id: contactListView
-            width: parent.width
-            height: parent.height
-            model: contactModel
+        id: contactListView
+        width: parent.width
+        height: parent.height
+        model: contactModel
 
-            delegate: Rectangle {
+        delegate:
+            Rectangle {
                 radius: 5
                 border.width: 1
                 width: parent.width
                 height: 50
                 color: "#f0f0f0"
-                Column {
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            //navigate to chat screen and set the userId of the user who we want to chat with
+                            chatController.setChatPartner(model.userId)
 
-                    spacing: 20
-                    Text {
-                        id: userNameText
-                        text: model.userName
-                        font.pixelSize: 20
-                        width: parent.width * 0.3
+                            navigator.navigateToChat()
+                        }
                     }
+                    Column {
 
-                    Text {
-                        id:latestMessageText
-                        anchors.top:userNameText.bottom
-                        text: model.latestMessage
-                        font.pixelSize: 16
-                        width: parent.width * 0.6
-                        color: "gray"
+                        spacing: 20
+                        Text {
+                            id: userNameText
+                            text: model.userName
+                            font.pixelSize: 20
+                            width: parent.width * 0.3
+                        }
+
+                        Text {
+                            id:latestMessageText
+                            anchors.top:userNameText.bottom
+                            text: model.latestMessage
+                            font.pixelSize: 16
+                            width: parent.width * 0.6
+                            color: "gray"
+                        }
                     }
-                }
-            }
-
-            ScrollBar.vertical: ScrollBar {
-                policy: ScrollBar.AsNeeded
-            }
         }
+
+        ScrollBar.vertical: ScrollBar {
+            policy: ScrollBar.AsNeeded
+        }
+    }
 
 }
