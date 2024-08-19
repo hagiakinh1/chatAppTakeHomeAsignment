@@ -6,7 +6,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Sql Quick REQUIRED)
+find_package(Qt5 COMPONENTS Core Sql Quick WebSockets REQUIRED)
 add_library(libTinyFsm)
 
 add_executable(${PROJECT_NAME} "main.cpp" "qml.qrc"
@@ -24,8 +24,10 @@ add_executable(${PROJECT_NAME} "main.cpp" "qml.qrc"
     "controller/navigator.h"
     "controller/chatcontroller.cpp"
     "controller/chatcontroller.h"
-    "config.h")
+    "config.h"
+    "websocketclient.cpp"
+    "websocketclient.h")
 
-target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::Sql libTinyFsm)
+target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Quick Qt5::Sql Qt5::WebSockets libTinyFsm)
 target_include_directories(libTinyFsm PUBLIC "thirdPartyLib/tinyfsm/include")
 

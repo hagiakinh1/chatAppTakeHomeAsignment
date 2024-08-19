@@ -11,7 +11,7 @@ QString ChatController::getChatPartnerName()
     return m_chatPartnerName;
 }
 
-ChatController::ChatController(QObject *parent) : QObject(parent)
+ChatController::ChatController(QObject *parent) : QObject(parent), mWebsocketClient(QUrl(QStringLiteral("ws://localhost:1234")), true)
 {
     qDebug("init chat controller");
 }
@@ -23,7 +23,8 @@ int ChatController::chatPartner()
 
 void ChatController::sendMessage(QString message)
 {
-    qDebug( "sent "+ message.toLatin1());
+    mWebsocketClient.sendTextMessage(message);
+    qDebug(message.toLatin1());
 }
 
 void ChatController::setChatPartner(int chatPartner)

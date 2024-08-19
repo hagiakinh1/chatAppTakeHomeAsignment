@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include<model/chatmodel.h>
+#include<websocketclient.h>
 
 class ChatController : public QObject
 {
@@ -10,6 +11,7 @@ class ChatController : public QObject
     Q_PROPERTY(int chatPartner READ chatPartner WRITE setChatPartner NOTIFY chatPartnerChanged)
     int m_chatPartner;
     QString m_chatPartnerName;
+    WebsocketClient mWebsocketClient;
 
 public:
     explicit ChatController(QObject *parent = nullptr);
