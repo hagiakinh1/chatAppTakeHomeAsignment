@@ -9,6 +9,7 @@
 #include <QThread>
 #include <controller/chatcontroller.h>
 #include<model/chatmodel.h>
+#include<model/textmessage.h>
 #include <list>
 
 int main(int argc, char *argv[])
@@ -22,20 +23,31 @@ int main(int argc, char *argv[])
     LoginController mLoginController;
     ContactModel mContactModel;
     ChatModel mChatModel;
-    mChatController.setChatModel(&mChatModel);
 
     QObject::connect(&mChatController, &ChatController::chatPartnerChanged, [&mLoginController, &mChatController, &mChatModel]() {
         LoginController* loginPtr = &mLoginController;
         ChatController* chatPtr = &mChatController;
 
         QList<QVariantList> messages = DataAccessObject::getInstance().readMessagesBetweenUsers(loginPtr->getUserId(), chatPtr->chatPartner());
+        QList<TextMessage> mTextMessages;
         for (const QVariantList& message : messages) {
-            mChatModel.setAllData(messages);
-            mChatModel.setCurrentUserName(mLoginController.getUserName());
+
+            TextMessage mTextMessage = TextMessage::Builder()
+                    .setMessageId(message[0].toInt())
+                    .setMyName(mLoginController.getUserName())
+                    .setChatPartnerName(mChatController.getChatPartnerName())
+                    .setSenderId(message[1].toInt())
+                    .setReceiverId(message[2].toInt())
+                    .setMessage(message[3].toString())
+                    .setSentAt(message[4].toString())
+                    .build();
+            mTextMessages<< mTextMessage;
+
         }
+        mChatModel.setCurrentUserName(mLoginController.getUserName());
+        mChatModel.setAllData(mTextMessages);
+
     });
-
-
 
 
     QObject::connect(&mLoginController, LoginController::userChanged, &mContactModel, ContactModel::setDataFromUserId);

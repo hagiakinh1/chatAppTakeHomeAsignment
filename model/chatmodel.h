@@ -5,17 +5,20 @@
 #include <QVariantList>
 #include<QList>
 #include <QObject>
+#include"textmessage.h"
 enum ChatModelRole {
-    User = Qt::UserRole + 1,
-    ChatPartner,
-    SenderId,
-    ReceiverId,
-    Message
+    MessageIdRole = Qt::UserRole + 1,
+    UserRole,
+    ChatPartnerRole,
+    MessageRole,
+    SenderIdRole,
+    ReceiverIdRole,
+    SentAtRole
 };
 class ChatModel :  public QAbstractListModel
 {
     Q_OBJECT
-    QList<QVariantList> chatHistoryData;
+    QList<TextMessage> chatHistoryData;
     QString userName;
 
 
@@ -33,7 +36,7 @@ public:
     int rowCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
-    void setAllData(const QList<QVariantList> &data);
+    void setAllData(const QList<TextMessage> &data);
     QHash<int, QByteArray> roleNames() const;
     QString getUserName() const;
 

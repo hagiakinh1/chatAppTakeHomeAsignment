@@ -28,11 +28,12 @@ Item {
                 width: parent.width* 0.8
                 height: 50
                 color: "#f0f0f0"
+                //current user is the receiver
                 Binding on anchors.left {
                             when: loginController.getUserId() === model.receiverId
                             value: parent.left
                         }
-
+                //current user is the sender
                 Binding on anchors.right {
                     when: !(loginController.getUserId() === model.receiverId)
                     value: parent.right
@@ -42,7 +43,14 @@ Item {
                         spacing: 20
                         Text {
                             id: userNameText
-                            text: model.senderId
+                            text: {
+                                //
+                                if (!(loginController.getUserId() === model.receiverId)){
+                                    return model.user
+                                }else{
+                                    return model.chatPartner
+                                }
+                            }
                             font.pixelSize: 20
                             width: parent.width * 0.3
                         }

@@ -19,18 +19,28 @@ int ChatModel::rowCount(const QModelIndex &parent) const
 QVariant ChatModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() >= chatHistoryData.count())
+            return QVariant();
+
+        const TextMessage &textMessage = chatHistoryData[index.row()];
+
+        switch (role) {
+            case ChatModelRole::MessageIdRole:
+                return textMessage.getMessageId();
+            case ChatModelRole::UserRole:
+                return this->userName;
+            case ChatModelRole::ChatPartnerRole:
+                return textMessage.getChatPartnerName();
+            case ChatModelRole::MessageRole:
+                return textMessage.getMessage();
+            case ChatModelRole::SenderIdRole:
+                return textMessage.getSenderId();
+            case ChatModelRole::ReceiverIdRole:
+                return textMessage.getReceiverId();
+            case ChatModelRole::SentAtRole:
+                return textMessage.getSentAt();
+            default:
                 return QVariant();
-    if (role == ChatModelRole::User){
-        return this->userName; // [message ID:  sender id: , receiver id: , message]
-    }else if (role == ChatModelRole::ChatPartner){
-        return "No partner name yet, fix this later";
-    }else if (role == ChatModelRole::Message){
-        return chatHistoryData[index.row()][3];
-    }else if (role == ChatModelRole::SenderId){
-        return chatHistoryData[index.row()][1];
-    }else if (role == ChatModelRole::ReceiverId){
-        return chatHistoryData[index.row()][2];
-    }
+        }
 }
 
 bool ChatModel::setData(const QModelIndex &index, const QVariant &value, int role)
@@ -38,7 +48,7 @@ bool ChatModel::setData(const QModelIndex &index, const QVariant &value, int rol
 
 }
 
-void ChatModel::setAllData(const QList<QVariantList> &data)
+void ChatModel::setAllData(const QList<TextMessage> &data)
 {
     this->chatHistoryData = data;
 }
@@ -47,11 +57,13 @@ QHash<int, QByteArray> ChatModel::roleNames() const
 {
 
         QHash<int, QByteArray> roles;
-        roles[ChatModelRole::User] = "user";
-        roles[ChatModelRole::ChatPartner] = "chatPartner";
-        roles[ChatModelRole::Message] = "message";
-        roles[ChatModelRole::SenderId] = "senderId";
-        roles[ChatModelRole::ReceiverId] = "receiverId";
+        roles[ChatModelRole::MessageIdRole] = "messageId";
+        roles[ChatModelRole::UserRole] = "user";
+        roles[ChatModelRole::ChatPartnerRole] = "chatPartner";
+        roles[ChatModelRole::MessageRole] = "message";
+        roles[ChatModelRole::SenderIdRole] = "senderId";
+        roles[ChatModelRole::ReceiverIdRole] = "receiverId";
+        roles[ChatModelRole::SentAtRole] = "sentAt";
         return roles;
 
 }

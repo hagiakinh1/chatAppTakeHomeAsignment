@@ -9,15 +9,15 @@ class ChatController : public QObject
     Q_OBJECT
     Q_PROPERTY(int chatPartner READ chatPartner WRITE setChatPartner NOTIFY chatPartnerChanged)
     int m_chatPartner;
-    ChatModel* mChatModel;
+    QString m_chatPartnerName;
 
 public:
     explicit ChatController(QObject *parent = nullptr);
 
     int chatPartner() ;
     Q_INVOKABLE void sendMessage(QString message);
-    ChatModel *chatModel() const;
-    void setChatModel(ChatModel *chatModel);
+    Q_INVOKABLE void setChatPartnerName(QString chatPartnerName);
+    QString getChatPartnerName();
 
 signals:
     

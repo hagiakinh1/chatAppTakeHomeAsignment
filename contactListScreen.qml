@@ -32,8 +32,9 @@ Item {
                         anchors.fill: parent
                         onClicked: {
                             //navigate to chat screen and set the userId of the user who we want to chat with
+                            //we have to setChatPartnerName first because we have a signal listen to setChatPartner.
+                            chatController.setChatPartnerName(model.userName)
                             chatController.setChatPartner(model.userId)
-
                             navigator.navigateToChat()
                         }
                     }
