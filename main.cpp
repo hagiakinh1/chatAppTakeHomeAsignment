@@ -9,8 +9,7 @@
 #include <QThread>
 #include <controller/chatcontroller.h>
 #include<model/chatmodel.h>
-
-
+#include <list>
 
 int main(int argc, char *argv[])
 {
@@ -23,24 +22,22 @@ int main(int argc, char *argv[])
     LoginController mLoginController;
     ContactModel mContactModel;
     ChatModel mChatModel;
+    mChatController.setChatModel(&mChatModel);
 
     QObject::connect(&mChatController, &ChatController::chatPartnerChanged, [&mLoginController, &mChatController, &mChatModel]() {
         LoginController* loginPtr = &mLoginController;
         ChatController* chatPtr = &mChatController;
 
         QList<QVariantList> messages = DataAccessObject::getInstance().readMessagesBetweenUsers(loginPtr->getUserId(), chatPtr->chatPartner());
-
         for (const QVariantList& message : messages) {
-            QString messageInfo = "message ID: " + QString::number(message[0].toInt())
-                + " sender id: " + QString::number(message[1].toInt())
-                + " receiver id: " + QString::number(message[2].toInt())
-                + " message: " + message[3].toString()
-                + " sent at " + message[4].toString();
-            QTextStream(stdout) << messageInfo << "\n";
+            mChatModel.setAllData(messages);
+            mChatModel.setCurrentUserName(mLoginController.getUserName());
         }
-        mChatModel.setAllData(messages);
-        mChatModel.setCurrentUserName(mLoginController.getUserName());
     });
+
+
+
+
     QObject::connect(&mLoginController, LoginController::userChanged, &mContactModel, ContactModel::setDataFromUserId);
 
 

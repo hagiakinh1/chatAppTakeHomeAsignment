@@ -18,6 +18,8 @@ class ChatModel :  public QAbstractListModel
     QList<QVariantList> chatHistoryData;
     QString userName;
 
+
+
 public:
     explicit ChatModel();
 
@@ -33,6 +35,8 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     void setAllData(const QList<QVariantList> &data);
     QHash<int, QByteArray> roleNames() const;
+    QString getUserName() const;
+
 };
 
 #endif // CHATMODEL_H

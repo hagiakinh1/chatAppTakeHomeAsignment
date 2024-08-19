@@ -63,4 +63,28 @@ Item {
         }
     }
 
+    TextArea{
+        anchors.top: chatHistoryListView.bottom
+        anchors.margins: 50
+        id: messageInput
+        height: 100
+        z:1
+        width: chatHistoryListView.width
+
+    }
+    Rectangle{
+        border.width: 1
+        color: "#f0f0f0"
+        radius: 5
+        z:0
+        anchors.fill: messageInput
+    }
+
+    Button{
+        id:sendButton
+        anchors.top: messageInput.bottom
+        text: "send"
+        onClicked: {chatController.sendMessage(messageInput.text)}
+    }
+
 }

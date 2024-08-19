@@ -1,5 +1,17 @@
 #include "chatcontroller.h"
 
+
+
+ChatModel *ChatController::chatModel() const
+{
+    return mChatModel;
+}
+
+void ChatController::setChatModel(ChatModel *chatModel)
+{
+    mChatModel = chatModel;
+}
+
 ChatController::ChatController(QObject *parent) : QObject(parent)
 {
     qDebug("init chat controller");
@@ -8,6 +20,12 @@ ChatController::ChatController(QObject *parent) : QObject(parent)
 int ChatController::chatPartner()
 {
     return m_chatPartner;
+}
+
+void ChatController::sendMessage(QString message)
+{
+    if(mChatModel!=nullptr)
+    qDebug(mChatModel->getUserName().toLatin1()+ "sent"+ message.toLatin1());
 }
 
 void ChatController::setChatPartner(int chatPartner)

@@ -55,3 +55,8 @@ QHash<int, QByteArray> ChatModel::roleNames() const
         return roles;
 
 }
+
+QString ChatModel::getUserName() const
+{
+    return this->userName;
+}
