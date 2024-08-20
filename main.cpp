@@ -46,6 +46,8 @@ int main(int argc, char *argv[])
         }
         mChatModel.setCurrentUserName(mLoginController.getUserName());
         mChatModel.setAllData(mTextMessages);
+        mChatController.setMyUserId(mLoginController.getUserId());
+        mChatController.setMyUserName(mLoginController.getUserName());
 
     });
 

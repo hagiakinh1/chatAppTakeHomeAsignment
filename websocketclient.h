@@ -17,10 +17,10 @@ public:
     void onDisconnected();
     void handleExit();
     void handleNewInput(const QString &input);
+    void sendTextMessage(QString senderName, QString receiverName, QString message, int senderId, int receiverId);
 signals:
     void closed();
 public slots:
-    void sendTextMessage(QString message);
 
 private slots:
     void onConnected();

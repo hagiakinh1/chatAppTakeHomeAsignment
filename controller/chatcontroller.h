@@ -11,6 +11,9 @@ class ChatController : public QObject
     Q_PROPERTY(int chatPartner READ chatPartner WRITE setChatPartner NOTIFY chatPartnerChanged)
     int m_chatPartner;
     QString m_chatPartnerName;
+    int myUserId;
+    QString myUserName;
+
     WebsocketClient mWebsocketClient;
 
 public:
@@ -20,6 +23,12 @@ public:
     Q_INVOKABLE void sendMessage(QString message);
     Q_INVOKABLE void setChatPartnerName(QString chatPartnerName);
     QString getChatPartnerName();
+
+    QString getMyUserName() const;
+    void setMyUserName(const QString &value);
+
+    int getMyUserId() const;
+    void setMyUserId(int value);
 
 signals:
     

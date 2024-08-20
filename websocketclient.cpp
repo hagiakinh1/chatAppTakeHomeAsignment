@@ -41,15 +41,9 @@ void WebsocketClient::onDisconnected()
     m_webSocket.close();
 
 }
-void WebsocketClient::sendTextMessage(QString message)
+void WebsocketClient::sendTextMessage(QString senderName, QString receiverName, QString message, int senderId, int receiverId)
 {   if (m_isConnected)
     {
-        // Sample data
-        QString senderName = "John Doe";
-        QString receiverName = "Jane Smith";
-
-        int senderId = 1;
-        int receiverId = 2;
 
         // Create a JSON object
         QJsonObject jsonObject;
@@ -78,7 +72,7 @@ void WebsocketClient::sendTextMessage(QString message)
 
 void WebsocketClient::handleNewInput(const QString &input) {
     qDebug() << "You entered:" << input;
-    sendTextMessage(input);
+//    sendTextMessage(input);
 }
 
 void WebsocketClient::handleExit() {
