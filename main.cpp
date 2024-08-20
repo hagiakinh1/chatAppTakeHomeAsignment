@@ -23,12 +23,13 @@ int main(int argc, char *argv[])
     LoginController mLoginController;
     ContactModel mContactModel;
     ChatModel mChatModel;
+    mChatController.setChatModel(&mChatModel);
 
     QObject::connect(&mChatController, &ChatController::chatPartnerChanged, [&mLoginController, &mChatController, &mChatModel]() {
         LoginController* loginPtr = &mLoginController;
         ChatController* chatPtr = &mChatController;
 
-        QList<QVariantList> messages = DataAccessObject::getInstance().readMessagesBetweenUsers(loginPtr->getUserId(), chatPtr->chatPartner());
+        QList<QVariantList> messages = DataAccessObject::getInstance().readMessagesBetweenUsers(loginPtr->getUserId(), chatPtr->chatPartnerId());
         QList<TextMessage> mTextMessages;
         for (const QVariantList& message : messages) {
 

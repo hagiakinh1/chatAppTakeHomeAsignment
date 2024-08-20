@@ -53,6 +53,13 @@ void ChatModel::setAllData(const QList<TextMessage> &data)
     this->chatHistoryData = data;
 }
 
+void ChatModel::addData(const TextMessage &singleTextMessage)
+{
+    beginInsertRows(QModelIndex(), chatHistoryData.count(), chatHistoryData.count());
+    this->chatHistoryData<<singleTextMessage;
+    endInsertRows();
+}
+
 QHash<int, QByteArray> ChatModel::roleNames() const
 {
 

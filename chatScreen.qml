@@ -32,7 +32,7 @@ Item {
                 Binding on anchors.left {
                             when: loginController.getUserId() === model.receiverId
                             value: parent.left
-                        }
+                }
                 //current user is the sender
                 Binding on anchors.right {
                     when: !(loginController.getUserId() === model.receiverId)
@@ -92,7 +92,11 @@ Item {
         id:sendButton
         anchors.top: messageInput.bottom
         text: "send"
-        onClicked: {chatController.sendMessage(messageInput.text)}
+        onClicked: {
+            chatController.sendMessage(messageInput.text)
+            //reset text
+            messageInput.text = ""
+        }
     }
 
 }

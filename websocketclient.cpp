@@ -29,7 +29,7 @@ void WebsocketClient::onTextMessageReceived(QString message)
 {
     if (m_debug)
         qDebug() << "Message received:" << message;
-//    m_webSocket.close();
+    emit textMessageReceivedDelegate(message);
 }
 WebsocketClient &WebsocketClient::getInstance()
 {

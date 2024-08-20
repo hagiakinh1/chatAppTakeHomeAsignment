@@ -4,22 +4,22 @@
 #include <QObject>
 #include<model/chatmodel.h>
 #include<websocketclient.h>
+#include<model/chatmodel.h>
 
 class ChatController : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int chatPartner READ chatPartner WRITE setChatPartner NOTIFY chatPartnerChanged)
+    Q_PROPERTY(int chatPartnerId READ chatPartnerId WRITE setChatPartner NOTIFY chatPartnerChanged)
     int m_chatPartner;
     QString m_chatPartnerName;
     int myUserId;
     QString myUserName;
-
+    ChatModel * mChatModel;
     WebsocketClient* mWebsocketClient = &WebsocketClient::getInstance();
-
 public:
     explicit ChatController(QObject *parent = nullptr);
 
-    int chatPartner() ;
+    int chatPartnerId() ;
     Q_INVOKABLE void sendMessage(QString message);
     Q_INVOKABLE void setChatPartnerName(QString chatPartnerName);
     QString getChatPartnerName();
@@ -30,13 +30,18 @@ public:
     int getMyUserId() const;
     void setMyUserId(int value);
 
+    ChatModel *getChatModel() const;
+    void setChatModel(ChatModel *chatModel);
+
 signals:
     
     
-    void chatPartnerChanged(int chatPartner);
+    void chatPartnerChanged(int chatPartnerId);
     
 public slots:
-    void setChatPartner(int chatPartner);
+    void setChatPartner(int chatPartnerId);
+    void onTextMessageReceived(QString message);
+
 
 };
 

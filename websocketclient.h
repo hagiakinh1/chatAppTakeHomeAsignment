@@ -23,6 +23,7 @@ public:
     ~WebsocketClient();
 signals:
     void closed();
+    void textMessageReceivedDelegate(QString message);
 public slots:
 
 private slots:

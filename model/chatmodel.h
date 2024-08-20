@@ -37,6 +37,7 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     void setAllData(const QList<TextMessage> &data);
+    void addData(const TextMessage &singleTextMessage);
     QHash<int, QByteArray> roleNames() const;
     QString getUserName() const;
 
