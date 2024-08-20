@@ -31,6 +31,13 @@ void WebsocketClient::onTextMessageReceived(QString message)
         qDebug() << "Message received:" << message;
 //    m_webSocket.close();
 }
+WebsocketClient &WebsocketClient::getInstance()
+{
+    static WebsocketClient mWebsocketClient(QUrl("ws://localhost:1234"), true);
+    return mWebsocketClient;
+}
+
+
 void WebsocketClient::onDisconnected()
 {
     if (m_debug)
@@ -67,6 +74,11 @@ void WebsocketClient::sendTextMessage(QString senderName, QString receiverName, 
     {
         qDebug("webSocket is not connected");
     }
+}
+
+WebsocketClient::~WebsocketClient()
+{
+    m_webSocket.close();
 }
 
 

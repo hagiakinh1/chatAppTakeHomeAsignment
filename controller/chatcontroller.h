@@ -14,7 +14,7 @@ class ChatController : public QObject
     int myUserId;
     QString myUserName;
 
-    WebsocketClient mWebsocketClient;
+    WebsocketClient* mWebsocketClient = &WebsocketClient::getInstance();
 
 public:
     explicit ChatController(QObject *parent = nullptr);

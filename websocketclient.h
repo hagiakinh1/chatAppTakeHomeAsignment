@@ -12,12 +12,15 @@ class WebsocketClient : public QObject
 {
     Q_OBJECT
 public:
-    explicit WebsocketClient(const QUrl &url, bool debug = false, QObject *parent = Q_NULLPTR);
+    static WebsocketClient& getInstance();
 
+    WebsocketClient(const WebsocketClient&) = delete;
+    WebsocketClient& operator=(const WebsocketClient&) = delete;
     void onDisconnected();
     void handleExit();
     void handleNewInput(const QString &input);
     void sendTextMessage(QString senderName, QString receiverName, QString message, int senderId, int receiverId);
+    ~WebsocketClient();
 signals:
     void closed();
 public slots:
@@ -30,6 +33,8 @@ private:
     QUrl m_url;
     bool m_debug;
     bool m_isConnected = false;
+    explicit WebsocketClient(const QUrl &url, bool debug = false, QObject *parent = Q_NULLPTR);
+
 };
 
 #endif // ECHOCLIENT_H
