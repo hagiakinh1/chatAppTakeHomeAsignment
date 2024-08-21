@@ -35,7 +35,6 @@ public:
 
 signals:
     
-    
     void chatPartnerChanged(int chatPartnerId);
     
 public slots:

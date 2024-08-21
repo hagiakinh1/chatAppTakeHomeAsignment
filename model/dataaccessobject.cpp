@@ -265,6 +265,42 @@ QList<QVariantList> DataAccessObject::readAllUsersWithLatestMessage(int user_id)
         }
     }
 
+    QString getAllUserNameString = R"(SELECT user_id, username FROM Users)";
+    QSqlQuery getAllUserNamequery;
+
+    QList<QVariantList> userNamesAndIds;
+    if (getAllUserNamequery.exec(getAllUserNameString)) {
+        while (getAllUserNamequery.next()) {
+            QVariantList userName;
+            userName << getAllUserNamequery.value("user_id") << getAllUserNamequery.value("username");
+            userNamesAndIds.append(userName);
+            qDebug("all users" + getAllUserNamequery.value("user_id").toByteArray() + getAllUserNamequery.value("username").toByteArray()) ;
+
+        }
+    }
+    int usersWithLatestMessageOriginalSize = usersWithLatestMessage.count();
+    for(QVariantList userNameAndId : userNamesAndIds){
+        int userId = userNameAndId.at(0).toInt();
+        QString userName = userNameAndId.at(1).toString();
+
+        bool isContained = false; //check if an user ids in userNamesAndIds
+                                  // contained an user id of usersWithLatestMessage
+        for (QVariantList userWithLatestMessage : usersWithLatestMessage){
+            if (userId == userWithLatestMessage.at(0).toInt()){
+                isContained |= true;
+            }
+        }
+
+        if(!isContained){
+            QVariantList chatPartnerWithNoMessageYet;
+            chatPartnerWithNoMessageYet << userId
+                 << userName
+                 << query.value("")
+                 << query.value("");
+            usersWithLatestMessage.append(chatPartnerWithNoMessageYet);
+        }
+    }
+
     return usersWithLatestMessage;
 }
 

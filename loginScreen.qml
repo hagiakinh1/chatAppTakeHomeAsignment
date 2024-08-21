@@ -7,7 +7,7 @@ Item {
     Rectangle {
         width: parent.width
         height: parent.height
-        color: "#f0f0f0"
+        color: "#99f0f0f0"
 
         Column {
             spacing: 20
@@ -17,6 +17,9 @@ Item {
                 id: usernameField
                 placeholderText: "Username"
                 width: 250
+                onAccepted: {
+                    loginController.login(usernameField.text, passwordField.text)
+                }
             }
 
             TextField {
@@ -24,6 +27,9 @@ Item {
                 placeholderText: "Password"
                 echoMode: TextInput.Password
                 width: 250
+                onAccepted: {
+                    loginController.login(usernameField.text, passwordField.text)
+                }
             }
 
             Row {

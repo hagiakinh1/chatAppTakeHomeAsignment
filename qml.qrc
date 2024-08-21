@@ -5,5 +5,6 @@
         <file>signUpScreen.qml</file>
         <file>contactListScreen.qml</file>
         <file>chatScreen.qml</file>
+        <file>assets/background.png</file>
     </qresource>
 </RCC>

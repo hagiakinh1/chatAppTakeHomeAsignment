@@ -7,7 +7,7 @@ Item {
     Rectangle {
         width: parent.width
         height: parent.height
-        color: "#f0f0f0"
+        color: "#99f0f0f0"
 
         Column {
             spacing: 20

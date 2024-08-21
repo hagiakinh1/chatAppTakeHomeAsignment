@@ -76,7 +76,7 @@ void ChatController::onTextMessageReceived(QString message)
                     .setSentAt("") // dont know yet, skip this
                     .build();
 
-            mChatModel->addData(mTextMessage);
+            mChatModel->setAddedData(mTextMessage);
         }
 
     }
@@ -107,7 +107,7 @@ void ChatController::sendMessage(QString message)
             .setSentAt("") // dont know yet, skip this
             .build();
 
-    mChatModel->addData(mTextMessage);
+    mChatModel->setAddedData(mTextMessage);
     qDebug(message.toLatin1());
 }
 
