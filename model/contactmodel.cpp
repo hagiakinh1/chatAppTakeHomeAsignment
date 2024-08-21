@@ -36,7 +36,17 @@ ContactModel::setData(const QList<QVariantList> &data)
 
 ContactModel::setDataFromUserId(int user_id)
 {
-    setData( DataAccessObject::getInstance().readAllUsersWithLatestMessage(user_id));
+    connect(&contactListDataLoadedWatcher, &QFutureWatcher<void>::finished, this, [this](){
+        //update the ui
+        beginInsertRows(QModelIndex(), 0, m_data.count());
+        endInsertRows();
+    });
+    QFuture<void> future = QtConcurrent::run([this, user_id]()
+    {
+        //Implement a loading screen in the future
+        setData( DataAccessObject::getInstance().readAllUsersWithLatestMessage(user_id));
+    });
+    contactListDataLoadedWatcher.setFuture(future);
 }
 
 QHash<int, QByteArray> ContactModel::roleNames() const

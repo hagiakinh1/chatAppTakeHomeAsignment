@@ -3,6 +3,9 @@
 #include <QAbstractListModel>
 #include <QVariantList>
 #include <QObject>
+#include <QtConcurrent/QtConcurrent>
+#include <QFutureWatcher>
+#include <QFuture>
 #include"dataaccessobject.h"
 enum ContactListModelRole {
     UserName = Qt::UserRole + 1,
@@ -12,6 +15,8 @@ enum ContactListModelRole {
 class ContactModel : public QAbstractListModel
 {
     Q_OBJECT
+    QFutureWatcher<void> contactListDataLoadedWatcher;
+
 public:
     ContactModel();
 
