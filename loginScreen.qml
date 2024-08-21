@@ -2,6 +2,21 @@ import QtQuick 2.0
 import QtQuick.Controls 2.2
 
 Item {
+    //example of valid password: aA0&llll
+    function validatePassword(pw) {
+
+        return /[A-Z]/       .test(pw) &&
+               /[a-z]/       .test(pw) &&
+               /[0-9]/       .test(pw) &&
+               /[^A-Za-z0-9]/.test(pw) &&
+               pw.length > 6;
+
+    }
+    function validateUsername(username) {
+
+        return username.length > 6;
+
+    }
     id: loginPage
 
     Rectangle {
@@ -18,8 +33,11 @@ Item {
                 placeholderText: "Username"
                 width: 250
                 onAccepted: {
-                    loginController.login(usernameField.text, passwordField.text)
-                }
+                    if(validateUsername(usernameField.text) && validatePassword(passwordField.text)){
+                        loginController.login(usernameField.text, passwordField.text)
+                    }else{
+                        notificationText.text = "User name or password is invalid."
+                    }                }
             }
 
             TextField {
@@ -28,8 +46,11 @@ Item {
                 echoMode: TextInput.Password
                 width: 250
                 onAccepted: {
-                    loginController.login(usernameField.text, passwordField.text)
-                }
+                    if(validateUsername(usernameField.text) && validatePassword(passwordField.text)){
+                        loginController.login(usernameField.text, passwordField.text)
+                    }else{
+                        notificationText.text = "User name or password is invalid."
+                    }                }
             }
 
             Row {
@@ -38,8 +59,11 @@ Item {
                 Button {
                     text: "Login"
                     onClicked: {
-                        // Handle login logic here
-                        loginController.login(usernameField.text, passwordField.text)
+                        if(validateUsername(usernameField.text) && validatePassword(passwordField.text)){
+                            loginController.login(usernameField.text, passwordField.text)
+                        }else{
+                            notificationText.text = "User name or password is invalid."
+                        }
                     }
                 }
 
@@ -54,6 +78,7 @@ Item {
 
             }
             Text {
+                id:notificationText
                 text: loginController.notificationText
                 anchors.top: signUpButton.bottom
                 anchors.horizontalCenter:  parent
