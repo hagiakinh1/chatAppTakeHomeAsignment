@@ -50,10 +50,9 @@ LoginController::signUp(QString userName, QString password)
     qDebug(userName.toLatin1() + " " + password.toLatin1());
 
     DataAccessObject &mDataAccessObject  = DataAccessObject::getInstance();
-    setUserId( mDataAccessObject.findUser(this->userName, this->password));
-    if(!(user_id >=1) // user_id >=1 means user exists
-            && (userName.length() >=3)
-            && (password) >=3){
+    setUserId( mDataAccessObject.findUser(userName, password));
+    if(!(user_id >=1)) // user_id >=1 means user exists
+    {
         if(mDataAccessObject.createUser(userName, password)){
             qDebug("create user " + userName.toLatin1() + " " + password.toLatin1());
             setNotificationText("");
